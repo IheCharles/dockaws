@@ -103,11 +103,9 @@ def chat(query):
 
 
 def handler(event, context):
-    print("this is my event",event)
-    print("this is my context",context)
     return {
         "statusCode": 200,
-        "body": {"message": chat("hi")},
+        "body": chat(event['queryStringParameters']["query"]),
     }
 
 #print(handler(None,None))
