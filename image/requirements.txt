@@ -1,0 +1,5 @@
+langchain==0.1.0
+faiss-cpu
+openai
+sentence-transformers
+
