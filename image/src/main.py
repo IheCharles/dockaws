@@ -1,7 +1,7 @@
 import os
 os.environ["OPENAI_API_KEY"] = "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"
 os.environ['TRANSFORMERS_CACHE'] = '/tmp'
-
+# https://qwq4uzmkaq6tmmj7afeozfguke0ulend.lambda-url.us-east-1.on.aws/
 import json
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.vectorstores import FAISS
