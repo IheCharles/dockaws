@@ -1,5 +1,5 @@
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 os.environ['TRANSFORMERS_CACHE'] = '/tmp'
 
 import json
@@ -10,22 +10,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chains.question_answering import load_qa_chain
 from langchain.memory import ConversationBufferMemory
-import shutil
 
-def clear_directory(directory_path):
-    # Check if the directory is not empty
-    if os.listdir(directory_path):
-        for item_name in os.listdir(directory_path):
-            item_path = os.path.join(directory_path, item_name)
-            if os.path.isfile(item_path) or os.path.islink(item_path):
-                os.remove(item_path)  # Remove files and links
-            elif os.path.isdir(item_path):
-                shutil.rmtree(item_path)  # Remove directories
-        print("Directory cleared.")
-    else:
-        print("Directory is already empty.")
-
-clear_directory('/tmp')
 model_kwargs = {'device': 'cpu'}
 default_ef = SentenceTransformerEmbeddings(model_name="./all-MiniLM-L6-v2", model_kwargs=model_kwargs)
 print("passing default_ef")
@@ -103,9 +88,15 @@ def chat(query):
 
 
 def handler(event, context):
+    chat_response = chat(event['queryStringParameters']["query"])
+    chat_response_json = json.dumps(chat_response)
+    
     return {
         "statusCode": 200,
-        "body": chat(event['queryStringParameters']["query"]),
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": chat_response_json,
     }
 
 #print(handler(None,None))
